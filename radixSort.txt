@@ -1,0 +1,86 @@
+#include <iostream>
+
+using namespace std;
+
+int getMax(int arr[], int size) 
+{ 
+    int m= arr[0]; 
+    for (int i = 1; i < size; i++) 
+        if (arr[i] > m) 
+            m = arr[i]; 
+    return m; 
+} 
+
+void cSort ( int arr[] , int size , int digit)
+{
+    int newArr[size];
+    
+    int c[10] = {0} ;
+    
+    for(int i=0;i<size;i++)
+    {
+        c[(arr[i]/digit)%10]++;
+    }
+    
+    for(int i=1;i<10;i++)
+    {
+        c[i] = c[i]+c[i-1];
+    }
+    
+    for(int i=size-1 ; i>=0 ; i--)
+    {
+        newArr[c[(arr[i]/digit)%10]-1] = arr[i];
+        c[(arr[i]/digit)%10]--;
+        
+    }
+    
+    for(int i=0 ; i<size;i++)
+    {
+        arr[i] = newArr[i];
+    }
+}
+
+void radixSort ( int arr[], int size)
+{
+    int m;
+    m = getMax( arr , size);
+    
+    for(int digit = 1 ; m/digit>0 ; digit*=10)
+    {
+        cSort(arr, size , digit);
+    }
+   
+}
+
+void display(int A[], int size) 
+{ 
+    int i; 
+    for (i = 0; i < size; i++) 
+       cout<<A[i]<<"\t";
+} 
+
+
+
+int main()
+{  clock_t t; 
+   t = clock(); 
+   cout << "The array before sorting" << endl <<endl;
+   int arr[] = { 96,822,7,6,5,41,3,2,};
+   
+   display(arr,8);
+   
+   cout<<endl;
+   
+   radixSort(arr , 8);
+   cout<<endl;
+   cout << "The array after sorting" << endl <<endl;
+   display(arr,8);
+   cout<<endl<<endl;
+   t = clock() - t; 
+   double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds 
+  
+   cout<<"The insertion sort took "<<time_taken<<" seconds";
+   
+   
+   return 0;
+}
