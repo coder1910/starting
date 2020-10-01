@@ -1,1 +1,1 @@
-One must make no mistakes. 
+These are some sorting algo.
